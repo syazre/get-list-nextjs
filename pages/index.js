@@ -1,27 +1,33 @@
-import { playlist } from '../data';
 import { List, Heading } from '@chakra-ui/core';
 
-import Song from '../components/Song';
+import Client from '../components/Client';
 
 export const getStaticProps = async () => {
+
+  const res = await fetch('https://syazre.free.beeceptor.com/my/api/client');
+  const client = await res.json();
+  
+
+
   return {
     props: {
-      playlistLists: playlist,
-    },
-  };
-};
+      clients: client
+    }
+  }
+}
 
-const PlaylistListz = ({ playlistLists }) => (
-  <>
-    <Heading mt={8} mb={4} fontWeight='800'>
-      My Client
-    </Heading>
+const Clients = ({clients}) => {
+  return (
+    <>
+    <Heading mt={8} mb={4} fontWeight='800'>My Client</Heading>
     <List>
-      {playlistLists.map((playlistList) => (
-        <Song key={playlistList.customerId} {...playlistList} />
+      {clients.map(client => (
+        <Client key={client.customerId} {...client} />
       ))}
     </List>
-  </>
-);
+    </>
+  );
+}
 
-export default PlaylistListz;
+
+export default Clients;
