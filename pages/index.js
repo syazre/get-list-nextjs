@@ -14,8 +14,6 @@ export const getServerSideProps = async () => {
   }
 }
 
-
-
 const Clients = ({data}) => {
   return (
     <>
@@ -33,24 +31,6 @@ const Clients = ({data}) => {
         </ListItem>
       ))}
     </List>
-    {/* <Heading mt={8} mb={4} fontWeight='800'>My Client</Heading>
-    <Heading>
-      {clients.results.map(client => (
-        <ListItem key={client.id}
-          p = {5}
-          my={2}
-          bg='white'
-        >
-            <Flex as='a'>
-                <Heading size='lg' fontWeight='500'>
-                  {client.name} 
-                </Heading>
-            </Flex>
-            
-            
-        </ListItem>
-      ))}
-    </Heading> */}
     </>
   );
 }
