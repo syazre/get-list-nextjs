@@ -2,35 +2,83 @@ import { List, Heading, Link, ListItem, Text} from '@chakra-ui/core';
 
 import Client from '../components/Client';
 
-export const getServerSideProps = async () => {
+/* export const getServerSideProps = async () => {
 
-  const res = await fetch('https://swapi.dev/api/people');
+  const res = await fetch('https://fortnite-api.com/v2/cosmetics/br/new');
   const data = await res.json();
   
   return {
     props: {
-      data
+      clients: data
     }
+  }
+} */
+
+async function getBooks () {
+  const res = await fetch('https://getbible.net/v1/web/books.json')
+  const json = await res.json()
+  return Object.entries(json)
+}
+
+async function getChapters (books) {
+  const chapters = await Promise.all(
+    books.map(async (item) => {
+      const url = item[1].url
+      const res = await fetch(url)
+      const json = await res.json()
+      return json
+    })
+  )
+
+  return chapters
+}
+
+export async function getStaticProps() {
+  const books = await getBooks()
+  const chapters = await getChapters(books)
+
+  return {
+    props: {
+      books,
+      chapters,
+    },
   }
 }
 
-const Clients = ({data}) => {
+
+
+const Clients = ({books, chapters}) => {
+
+
   return (
     <>
-    <List>
-      {data.results.map((result) => (
-        <ListItem key={result.episode_id} className="column" mb={4}>
-            <Heading>{result.name}</Heading>
+      <List>
+        {books.map((book,index) => (
+          <ListItem key={book[1].id}>
+            <Heading>{ book[1].name }</Heading>
+            {chapters.map((chapter,index) =>
+              <Text>{chapter.book_name}</Text>
+            )}
+          </ListItem>
+        ))}
+      </List>
+
+
+    {/* <List>
+      {clients.data.items.map((result, index) => (
+        // <Client key={result.id} {...result}
+        <ListItem key={result.id} className="column" mb={4} p = {5}  bg='white'>
+            <Heading>{index + 1}. {result.name}</Heading>
             <List>
-              {result.films.map((film, index) => (
+              {result.gameplayTags.map((gameplayTag, index) => (
                 <ListItem key={index}>
-                  <Text>{index + 1 }. {film}</Text>
+                  <Text>{gameplayTag}</Text>
                 </ListItem>
                 ))}
             </List>
         </ListItem>
       ))}
-    </List>
+    </List> */}
     </>
   );
 }

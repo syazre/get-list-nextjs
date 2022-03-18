@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { useTable } from 'react-table';
 
 
-const Client = ({ customerId, FullName, email, KWAccountStatus, CSAccountStatus , pics, name}) => (
+const Client = ({ id, name}) => (
   <ListItem
     p = {5}
     my={2}
@@ -12,12 +12,9 @@ const Client = ({ customerId, FullName, email, KWAccountStatus, CSAccountStatus 
   >
       <Flex as='a'>
           <Heading size='lg' fontWeight='500'>
-            {name} 
+            {id} - {name}
           </Heading>
       </Flex>
-      {/* <Text>{email}</Text>
-      <Text>{KWAccountStatus}</Text>
-      <Text>{CSAccountStatus}</Text> */}
       
       
   </ListItem>
