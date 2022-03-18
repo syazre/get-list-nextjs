@@ -54,10 +54,10 @@ const Clients = ({books, chapters}) => {
     <>
       <List>
         {books.map((book,index) => (
-          <ListItem key={book[1].id}>
+          <ListItem key={index}>
             <Heading>{ book[1].name }</Heading>
-            {chapters.map((chapter,index) =>
-              <Text>{chapter.book_name}</Text>
+            {chapters.slice(index, index+1).map((chapter,index2) =>
+              <Text key={index2}>{chapter.book_name}</Text>
             )}
           </ListItem>
         ))}
