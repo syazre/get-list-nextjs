@@ -57,7 +57,9 @@ const Clients = ({books, chapters}) => {
           <ListItem key={index}>
             <Heading>{ book[1].name }</Heading>
             {chapters.slice(index, index+1).map((chapter,index2) =>
-              <Text key={index2}>{chapter.book_name}</Text>
+              <>
+                <Text key={index2}>{chapter.book[1].chapter[1].verse}</Text>
+              </>
             )}
           </ListItem>
         ))}
