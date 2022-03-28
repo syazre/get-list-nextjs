@@ -56,31 +56,15 @@ const Clients = ({books, chapters}) => {
         {books.map((book,index) => (
           <ListItem key={index}>
             <Heading>{ book[1].name }</Heading>
+            <Text>{ book[1].url }</Text>
             {chapters.slice(index, index+1).map((chapter,index2) =>
               <>
-                <Text key={index2}>{chapter.book[1].chapter[1].verse}</Text>
+                <Text><b>Total Books:</b> { Object.keys(chapter.book).length }</Text>
               </>
             )}
           </ListItem>
         ))}
       </List>
-
-
-    {/* <List>
-      {clients.data.items.map((result, index) => (
-        // <Client key={result.id} {...result}
-        <ListItem key={result.id} className="column" mb={4} p = {5}  bg='white'>
-            <Heading>{index + 1}. {result.name}</Heading>
-            <List>
-              {result.gameplayTags.map((gameplayTag, index) => (
-                <ListItem key={index}>
-                  <Text>{gameplayTag}</Text>
-                </ListItem>
-                ))}
-            </List>
-        </ListItem>
-      ))}
-    </List> */}
     </>
   );
 }
