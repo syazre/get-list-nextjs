@@ -2,18 +2,6 @@ import { List, Heading, Link, ListItem, Text} from '@chakra-ui/core';
 
 import Client from '../components/Client';
 
-/* export const getServerSideProps = async () => {
-
-  const res = await fetch('https://fortnite-api.com/v2/cosmetics/br/new');
-  const data = await res.json();
-  
-  return {
-    props: {
-      clients: data
-    }
-  }
-} */
-
 async function getBooks () {
   const res = await fetch('https://getbible.net/v1/web/books.json')
   const json = await res.json()
