@@ -54,16 +54,19 @@ const Clients = ({books, chapters}) => {
     <>
       <List>
         {books.map((book,index) => (
-          <ListItem key={index} p = {5} my={2} bg='white'>
+          <ListItem key={index} p = {5} my={2}  bg='white' >
             <Heading>{ book[1].name }</Heading>
             {chapters.slice(index, index+1).map((chapter,index2) =>
               <>
                 <Text><b>Total Books:</b> { Object.keys(chapter.book).length }</Text>
-                <Text><b>Total Chapter:</b> { Object.keys(chapter.book[1].chapter).length }</Text>
-
-                { Object.keys(chapter.book[1].chapter).map((versez,index3) => 
-                <Text><b>Verse {chapter.book[1].chapter[index3+1].verse_nr}:</b> { chapter.book[1].chapter[index3+1].verse }</Text>
+                { Object.values(chapter.book).map((chapz,index3) =>
+                <>
+                  <Text pl = {3}  mt = {3} ><b>Total Verse {index3+1}:</b> { Object.keys(chapz.chapter).length }</Text>
+                  { Object.values(chapz.chapter).map((chapx,index4) =>
+                    <Text pl = {6} ><b>Verse {index4+1}:</b> { chapx.verse }</Text>
                   )}
+                </>
+                )}
               </>
             )}
           </ListItem>
