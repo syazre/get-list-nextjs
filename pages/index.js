@@ -2,13 +2,19 @@ import { List, Heading, Link, ListItem, Text} from '@chakra-ui/core';
 
 import Client from '../components/Client';
 
-async function getBooks () {
-  const res = await fetch('https://getbible.net/v1/web/books.json')
+/* async function getBooks () {
+  const res = await fetch('http://localhost:3000/api/books')
+  const json = await res.json()
+  return Object.entries(json)
+} */
+
+async function getClients () {
+  const res = await fetch('http://localhost:3000/api/clients')
   const json = await res.json()
   return Object.entries(json)
 }
 
-async function getChapters (books) {
+/* async function getChapters (books) {
   const chapters = await Promise.all(
     books.map(async (item) => {
       const url = item[1].url
@@ -19,9 +25,22 @@ async function getChapters (books) {
   )
 
   return chapters
+} */
+
+async function getDetails (clients) {
+  const details = await Promise.all(
+    clients.map(async (item) => {
+      const url = 'http://localhost:3000/api/clients/' + item[1].customerId;
+      const res = await fetch(url)
+      const json = await res.json()
+      return json
+    })
+  )
+
+  return details
 }
 
-export async function getStaticProps() {
+/* export async function getStaticProps() {
   const books = await getBooks()
   const chapters = await getChapters(books)
 
@@ -31,14 +50,50 @@ export async function getStaticProps() {
       chapters,
     },
   }
+} */
+
+export async function getStaticProps() {
+  const clients = await getClients()
+  const details = await getDetails(clients)
+  
+
+  return {
+    props: {
+      clients,
+      details,
+    },
+  }
 }
 
 
 
-const Clients = ({books, chapters}) => {
-
-
+const Clients = ({clients, details}) => {
+  console.log(details);
   return (
+    <>
+      <List>
+        {clients.map((client,index) => (
+          <ListItem key={index} p = {5} my={2}  >
+            <Text>{ client[1].FullName }</Text>
+            {details.slice(index, index+1).map((detail,index2) => (
+              <>
+              {detail.map((d,index3) => (
+                <>
+                {d.productbreakdown.map((product,index4) => (
+                  <>
+                    <Text>{product.productType } : {product.partnerProductId}</Text>
+                  </>
+                ))}
+                </>
+              ))}
+              </>
+            ))}
+          </ListItem>
+        ))}
+      </List>
+    </>
+  );
+  /* return (
     <>
       <List>
         {books.map((book,index) => (
@@ -61,7 +116,7 @@ const Clients = ({books, chapters}) => {
         ))}
       </List>
     </>
-  );
+  ); */
 }
 
 
