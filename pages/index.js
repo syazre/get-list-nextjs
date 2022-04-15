@@ -79,9 +79,11 @@ const Clients = ({clients, details}) => {
               <>
               {detail.map((d,index3) => (
                 <>
+                {d.partnerAccountType == 'CS'? <Text>Cash</Text>: null }
+                {d.partnerAccountType == 'KW'? <Text>KWSP</Text>: null }
                 {d.productbreakdown.map((product,index4) => (
                   <>
-                    <Text>{product.productType } : {product.partnerProductId}</Text>
+                    <Text>{product.partnerProductId} - {product.units}</Text>
                   </>
                 ))}
                 </>
