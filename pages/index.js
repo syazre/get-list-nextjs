@@ -8,8 +8,13 @@ import Client from '../components/Client';
   return Object.entries(json)
 } */
 
-async function getClients () {
+async function getClientsOld () {
   const res = await fetch('http://localhost:3000/api/clients')
+  const json = await res.json()
+  return Object.entries(json)
+}
+async function getClients () {
+  const res = await fetch('http://localhost:3000/api/clients-3')
   const json = await res.json()
   return Object.entries(json)
 }
@@ -29,8 +34,9 @@ async function getClients () {
 
 async function getDetails (clients) {
   const details = await Promise.all(
-    clients.map(async (item) => {
-      const url = 'http://localhost:3000/api/clients/' + item[1].customerId;
+    
+    clients.map(async (item,index) => {
+      const url = 'http://localhost:3000/api/clients/' + item.customerId;
       const res = await fetch(url)
       const json = await res.json()
       return json
@@ -54,12 +60,12 @@ async function getDetails (clients) {
 
 export async function getStaticProps() {
   const clients = await getClients()
-  const details = await getDetails(clients)
+  const details = await getDetails(clients[0][1].data)
   
 
   return {
     props: {
-      clients,
+      clients: clients[0][1].data,
       details,
     },
   }
@@ -68,24 +74,51 @@ export async function getStaticProps() {
 
 
 const Clients = ({clients, details}) => {
-  console.log(details);
+  console.log(details)
   return (
     <>
       <List>
         {clients.map((client,index) => (
           <ListItem key={index} p = {5} my={2}  >
-            <Text>{ client[1].FullName }</Text>
+            <Text>{ client.FullName }</Text>
             {details.slice(index, index+1).map((detail,index2) => (
               <>
               {detail.map((d,index3) => (
                 <>
-                {d.partnerAccountType == 'CS'? <Text>Cash</Text>: null }
-                {d.partnerAccountType == 'KW'? <Text>KWSP</Text>: null }
-                {d.productbreakdown.map((product,index4) => (
-                  <>
-                    <Text>{product.partnerProductId} - {product.units}</Text>
-                  </>
-                ))}
+                <table style={{borderWidth: 1}}>
+                    <tr style={{borderWidth: 1}}>
+                      {d.partnerAccountType == 'CS'? <td rowspan="2" style={{borderWidth: 1, padding: 10, width: 100, textAlign: 'center'}}><Text>Cash</Text></td>: null }
+                      {d.partnerAccountType == 'KW'? <td rowspan="2" style={{borderWidth: 1, padding: 10, width: 100, textAlign: 'center'}}><Text>KWSP</Text></td>: null }
+                
+                      {d.productbreakdown.map((product,index4) => (
+                        <>
+                          {product.partnerProductId == '045' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
+                          {product.partnerProductId == '008' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
+                          {product.partnerProductId == '248' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
+                          {product.partnerProductId == '282' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
+                          {product.partnerProductId == '013' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
+                          {product.partnerProductId == '015' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
+                          {product.partnerProductId == '168' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
+                          {product.partnerProductId == '026' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
+                        </>
+                      ))}
+                    </tr>
+
+                    <tr style={{borderWidth: 1}}>
+                      {d.productbreakdown.map((product,index4) => (
+                        <>
+                          {product.partnerProductId == '045' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
+                          {product.partnerProductId == '008' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
+                          {product.partnerProductId == '248' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
+                          {product.partnerProductId == '282' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
+                          {product.partnerProductId == '013' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
+                          {product.partnerProductId == '015' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
+                          {product.partnerProductId == '168' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
+                          {product.partnerProductId == '026' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
+                        </>
+                      ))}
+                    </tr>
+                </table>
                 </>
               ))}
               </>
