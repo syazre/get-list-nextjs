@@ -15,7 +15,7 @@ const MyApp = ({ Component, pageProps }) => {
       <Global
         styles={css`
           body {
-            background-color: #f7fafc;
+            background-color: #fff;
           }
 
           #__next {

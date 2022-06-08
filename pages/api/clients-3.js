@@ -57,6 +57,24 @@ export default function handler(req, res) {
                 "KWAccountStatus": null,
                 "ISAF_PERFORMANCE_DATE": "2022-02-09T00:00:00.000Z",
                 "ISAF_SCORE": 4
+            }, 
+            {
+                "customerId": "106670",
+                "createdAt": "2018-06-21T00:00:00.000Z",
+                "modifiedAt": "2022-05-25T20:02:59.850Z",
+                "FullName": "NURASHIKIN BINTI MOHD ROSLAN",
+                "email": "jd.eqin@gmail.com",
+                "AccMobileNo": "012345678",
+                "MainHolderIDNo": "922222-01-2222",
+                "agentId": "9999",
+                "CSUTRACCOUNTNO": "444444",
+                "KWUTRACCOUNTNO": null,
+                "CStotalNetAssetValue": 66604.6623,
+                "KWtotalNetAssetValue": null,
+                "CSAccountStatus": "A",
+                "KWAccountStatus": null,
+                "ISAF_PERFORMANCE_DATE": "2021-12-02T00:00:00.000Z",
+                "ISAF_SCORE": 5
             }
         ]
     }

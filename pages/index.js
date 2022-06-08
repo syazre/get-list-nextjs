@@ -75,48 +75,52 @@ export async function getStaticProps() {
 
 const Clients = ({clients, details}) => {
   console.log(details)
+  var countRSP = 0;
   return (
     <>
       <List>
         {clients.map((client,index) => (
-          <ListItem key={index} p = {5} my={2}  >
-            <Text>{ client.FullName }</Text>
+          <ListItem key={index} p = {5} my={2} >
+           { client.FullName }
             {details.slice(index, index+1).map((detail,index2) => (
               <>
-              {detail.map((d,index3) => (
+
+              {detail.response.map((d,index3) => (
                 <>
                 <table style={{borderWidth: 1}}>
                     <tr style={{borderWidth: 1}}>
-                      {d.partnerAccountType == 'CS'? <td rowspan="2" style={{borderWidth: 1, padding: 10, width: 100, textAlign: 'center'}}><Text>Cash</Text></td>: null }
-                      {d.partnerAccountType == 'KW'? <td rowspan="2" style={{borderWidth: 1, padding: 10, width: 100, textAlign: 'center'}}><Text>KWSP</Text></td>: null }
+                      {d.partnerAccountType == 'CS'? <td rowspan="2" style={{borderWidth: 1, padding: 10, width: 100, textAlign: 'center', background: 'white'}}><Text style={{fontWeight: 'bold'}}>Cash</Text></td>: null }
+                      {d.partnerAccountType == 'KW'? <td rowspan="2" style={{borderWidth: 1, padding: 10, width: 100, textAlign: 'center', background: 'white'}}><Text style={{fontWeight: 'bold'}}>KWSP</Text></td>: null }
+                      <td style={{borderWidth: 1, width: 100, textAlign: 'center', background: 'white'}}>Total</td>
                 
                       {d.productbreakdown.map((product,index4) => (
                         <>
-                          {product.partnerProductId == '045' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
-                          {product.partnerProductId == '008' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
-                          {product.partnerProductId == '248' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
-                          {product.partnerProductId == '282' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
-                          {product.partnerProductId == '013' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
-                          {product.partnerProductId == '015' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
-                          {product.partnerProductId == '168' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
-                          {product.partnerProductId == '026' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.partnerProductId}</td> : null }
+                          <td style={{borderWidth: 1, width: 100, textAlign: 'center', background: 'white'}}>{product.partnerProductId}</td>
                         </>
                       ))}
                     </tr>
 
                     <tr style={{borderWidth: 1}}>
+                      <td style={{borderWidth: 1, width: 100, textAlign: 'center', background: 'white'}}>{d.totalNetAssetValue.toFixed(2)}</td>
                       {d.productbreakdown.map((product,index4) => (
                         <>
-                          {product.partnerProductId == '045' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
-                          {product.partnerProductId == '008' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
-                          {product.partnerProductId == '248' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
-                          {product.partnerProductId == '282' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
-                          {product.partnerProductId == '013' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
-                          {product.partnerProductId == '015' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
-                          {product.partnerProductId == '168' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
-                          {product.partnerProductId == '026' ? <td style={{borderWidth: 1, width: 100, textAlign: 'center'}}>{product.units}</td> : null }
+                          <td style={{borderWidth: 1, width: 100, textAlign: 'center', background: 'white'}}>{product.value.toFixed(2)}</td>
                         </>
                       ))}
+                    </tr>
+                    <tr style={{borderWidth: 1}}>
+                      {d.productbreakdown.map((product,index4) => (
+                        <>
+                        {product.rspMaxAmount !== null ? <span style={{ display: "none" }}> { countRSP = countRSP+1 }</span> : null }
+                        </>
+                      ))}
+                      {countRSP > 1 ? <td style={{borderWidth: 1, width: 100, textAlign: 'center', background: 'white', fontWeight: 'bold'}}>RSP </td> : null}
+                      {countRSP > 1 ? <td style={{borderWidth: 1, width: 100, textAlign: 'center', background: 'white'}}> </td> : null}
+                      {d.productbreakdown.map((product,index4) => (
+                        <>
+                          {countRSP > 1 ? <td style={{borderWidth: 1, width: 100, textAlign: 'center', background: 'white'}}>{product.rspMaxAmount} </td> : null }
+                        </>
+                      ))} 
                     </tr>
                 </table>
                 </>
