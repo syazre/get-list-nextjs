@@ -11,7 +11,10 @@ const IntervalExample = () => {
         //const res = await fetch('https://jsonplaceholder.typicode.com/posts/')
         
         const json = await res.json()
-        setPosts(json)
+        let updatedValue = 1+updatedValue;
+        updatedValue = json;
+        setPosts(oldArray => [...oldArray, json]);
+        console.log(updatedValue);
     }
 
   useEffect(() => {
@@ -25,7 +28,6 @@ const IntervalExample = () => {
             clearInterval(interval);
         }
     }, 1000);
-    getPosts(1);
     return () => clearInterval(interval);
   }, []);
 
@@ -33,7 +35,9 @@ const IntervalExample = () => {
     <div className="App">
       <header className="App-header">
         {seconds} seconds have elapsed since mounting. {' '}
-        {posts.title}
+        {posts.map(post =>
+          <div>{post.title}</div>
+        )}
       </header>
     </div>
   );
