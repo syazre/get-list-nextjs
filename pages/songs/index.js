@@ -6,25 +6,30 @@ const IntervalExample = () => {
   const [posts, setPosts]=useState([])
 
     async function getPosts (id) {
-        const url = 'https://jsonplaceholder.typicode.com/posts/' + id;
+        const url = 'http://localhost:3000/api/clients/' + id;
         const res = await fetch(url)
         //const res = await fetch('https://jsonplaceholder.typicode.com/posts/')
         
         const json = await res.json()
-        let updatedValue = 1+updatedValue;
-        updatedValue = json;
-        setPosts(oldArray => [...oldArray, json]);
+        let updatedValue = json;
+        setPosts(oldArray => [...oldArray, updatedValue]);
         console.log(updatedValue);
     }
 
-  useEffect(() => {
+  useEffect(async () => {
     var seconds = 1;
+    // const url = 'https://jsonplaceholder.typicode.com/posts/';
+    const url = 'http://localhost:3000/api/clients-3';
+    const res = await fetch(url)
+    const json = await res.json(); 
+    const objson = Object.entries(json); 
+    //console.log(objson[0][1].data);
     const interval = setInterval(() => {
       setSeconds(seconds => seconds + 1);
-      getPosts(seconds);
+      getPosts(objson[0][1].data[seconds-1].customerId);
       seconds++;
 
-      if(seconds === 20){
+      if(seconds === 4){
             clearInterval(interval);
         }
     }, 1000);
@@ -36,7 +41,7 @@ const IntervalExample = () => {
       <header className="App-header">
         {seconds} seconds have elapsed since mounting. {' '}
         {posts.map(post =>
-          <div>{post.title}</div>
+          <div key={post.response[0].id}>{post.response[0].portfolioValue.toFixed(2)}</div>
         )}
       </header>
     </div>
